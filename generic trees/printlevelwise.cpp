@@ -1,0 +1,67 @@
+#include <iostream>
+#include <vector>
+#include<queue>
+using namespace std;
+
+template<typename T>
+class TreeNode{
+    public:
+        T data;
+        vector<TreeNode<T>*> children;
+
+        TreeNode(T data)
+        {
+            this->data=data;
+        }
+
+};
+void printTree(TreeNode<int> *root)
+{
+    queue<TreeNode<int>*>q;
+    q.push(root);
+    while(!q.empty())
+    {
+        TreeNode<int>* f = q.front();
+        cout<<f->data<<" : ";
+        q.pop();
+
+        for(int i=0;i<f->children.size();i++)
+        {
+            cout<<f->children[i]->data<<" ";
+            q.push(f->children[i]);
+        }
+        cout<<"\n";
+    }
+}
+
+
+
+TreeNode<int> *takeInput()
+{
+    int data,node;
+    cout<<"Enter the data : ";
+    cin>>data;
+    TreeNode<int> *Tree = new TreeNode<int>(data);
+    cout<<"Enter number of Child nodes for this Node : ";
+    cin>>node;
+    
+    for(int i=0;i<node;i++)
+    {
+        Tree->children.push_back(takeInput());
+    }
+    return Tree;
+}
+
+
+int main()
+{
+    system("clear");
+    /*TreeNode<int>* root = new TreeNode<int>(1);
+    TreeNode<int>* n1 = new TreeNode<int>(2);
+    TreeNode<int>* n2 = new TreeNode<int>(3);
+    root->children.push_back(n1);
+    root->children.push_back(n2);*/
+    TreeNode<int>* root = takeInput();
+    printTree(root);
+    return 0;
+}
